@@ -1,1 +1,1 @@
-# expense-web-app
+# This is a personal expense tracker web application
