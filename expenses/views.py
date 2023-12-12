@@ -12,7 +12,7 @@ def index(request):
     today = datetime.now()
     current_month = today.month
     month = calendar.month_name[current_month]
-    all = Expense.objects.all()
+    all = Expense.objects.all().order_by('date_due', '-amount')
     expenses = []
     for expense in all:
         if expense.date_due.month == current_month:
@@ -58,3 +58,27 @@ def add(request):
     return render(request, 'expenses/add.html', {
         'form': ExpenseForm()
     })
+
+def edit(request, id):
+    if request.method == "POST":
+        expense = Expense.objects.get(pk=id)
+        form = ExpenseForm(request.POST, instance=expense)
+        if form.is_valid():
+            form.save()
+            return render(request, 'expenses/edit.html', {
+                'form': form,
+                'success': True
+            })
+    else:
+        expense = Expense.objects.get(pk=id)
+        form = ExpenseForm(instance=expense)
+    return render(request, 'expenses/edit.html', {
+        'form': form
+    })
+
+
+def delete(request, id):
+    if request.method == "POST":
+        expense = Expense.objects.get(pk=id)
+        expense.delete()
+    return HttpResponseRedirect(reverse('index'))

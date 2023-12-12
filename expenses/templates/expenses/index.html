@@ -20,7 +20,7 @@
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Amount</th>
                                                 <th scope="col">Payer</th>
-                                                <th scope="col">Actions</th>
+                                                <th scope="col" style="text-align: center;">Actions</th>
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -38,7 +38,7 @@
                                                   <td>{{ expense.name }}</td>
                                                   <td>${{ expense.amount }}</td>
                                                   <td>{{ expense.payer }}</td>
-                                                  <td>
+                                                  <td style="text-align: center;">
                                                       <button type="button" class="btn btn-outline-dark me-1" href="{% url 'view_expense' expense.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{expense.id}}">
                                                         <i class="fa-solid fa-circle-info fa-lg"></i>
                                                       </button>
@@ -54,7 +54,7 @@
                                                                 <span aria-hidden="true"></span>
                                                               </button>
                                                             </div>
-                                                            <div class="modal-body">
+                                                            <div class="modal-body" style="text-align: left;">
                                                               <ul class="list-unstyled">
                                                                 <li>Status: 
                                                                   <strong>
@@ -72,6 +72,39 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                               <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      <a class="btn btn-outline-dark me-1" href="{% url 'edit' expense.id %}">
+                                                        <i class="fa-solid fa-file-pen fa-lg"></i>
+                                                      </a>
+
+                                                      <button class="btn btn-outline-dark me-1" data-bs-toggle="modal" data-bs-target="#delete{{expense.id}}">
+                                                        <i class="fa-solid fa-trash-can fa-lg"></i>
+                                                      </button>
+
+                                                      <!-- Modal - Delete Expense -->
+                                                      <div class="modal" id="delete{{expense.id}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                          <div class="modal-content">
+                                                            <div class="modal-header">
+                                                              <h5 class="modal-title">
+                                                                Expense: {{ expense.name }}
+                                                              </h5>
+                                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"></span>
+                                                              </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                              <p>Are you sure you want to delete this expense?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                              <form action="{% url 'delete' expense.id %}" method="POST">
+                                                                {% csrf_token %}
+                                                                <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                                              </form>
+                                                              <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancel</button>
                                                             </div>
                                                           </div>
                                                         </div>
