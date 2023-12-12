@@ -18,6 +18,7 @@
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Due</th>
                                                 <th scope="col">Name</th>
+                                                <th scope="col">Amount</th>
                                                 <th scope="col">Payer</th>
                                                 <th scope="col">Actions</th>
                                               </tr>
@@ -35,6 +36,7 @@
                                                   </td>
                                                   <td>{{ expense.date_due|date:'Y-m-d' }}</td>
                                                   <td>{{ expense.name }}</td>
+                                                  <td>${{ expense.amount }}</td>
                                                   <td>{{ expense.payer }}</td>
                                                   <td>
                                                       <button type="button" class="btn btn-outline-dark me-1" href="{% url 'view_expense' expense.id %}" data-bs-toggle="modal" data-bs-target="#myModal{{expense.id}}">
@@ -63,6 +65,7 @@
                                                                   {% endif %}
                                                                   </strong>
                                                                 </li>
+                                                                <li>Amount: <strong>${{ expense.amount }}</strong></li>
                                                                 <li>Payer: <strong>{{ expense.payer }}</strong></li>
                                                                 <li>Due Date: <strong>{{ expense.date_due|date:'Y-m-d' }}</strong></li>
                                                               </ul>
