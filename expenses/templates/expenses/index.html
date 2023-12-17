@@ -25,14 +25,11 @@
                                             </thead>
                                             <tbody>
                                                 {% for expense in expenses %}
-                                                <tr style="vertical-align: middle;" class="{% if expense.paid %}strikeout{% endif %}">
+                                                <tr id="expense-{{ expense.id }}" style="vertical-align: middle;" class="{% if expense.paid %}strikeout{% endif %}">
                                                   <td>
-                                                    <a href="{% url 'toggle_status' expense.id %}">
-                                                    <button type="button" class="btn btn-outline-primary">
+                                                    <button hx-post="{% url 'toggle' expense.id %}" hx-trigger="click" hx-target="#expense-{{ expense.id }}" hx-swap="outerHTML" type="button" class="btn btn-outline-primary">
                                                       <i class="fa-solid fa-money-bill-transfer fa-lg"></i>
                                                     </button>
-                                                    </a>
-
                                                   </td>
                                                   <td>{{ expense.date_due|date:'Y-m-d' }}</td>
                                                   <td>{{ expense.name }}</td>

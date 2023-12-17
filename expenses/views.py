@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from datetime import datetime
@@ -25,6 +25,27 @@ def index(request):
 def view_expense(request, id):
     expense = Expense.objects.get(pk=id)
     return HttpResponseRedirect(reverse('index'))
+
+def toggle(request, id):
+    expense = Expense.objects.get(pk=id)
+    if expense.paid:
+        expense.paid = False
+    else:
+        expense.paid = True
+    expense.save()
+
+    updated_expense = {
+        'id': expense.id,
+        'name': expense.name,
+        'date_due': expense.date_due,
+        'payer': expense.payer,
+        'amount': expense.amount,
+        'date_logged': expense.date_logged,
+        'paid': expense.paid,
+    }
+    return render(request, 'expenses/components/expense_row.html', {
+        'expense': updated_expense,
+    })
 
 def toggle_status(request, id):
     expense = Expense.objects.get(pk=id)
